@@ -6,6 +6,8 @@ import example.test.domain.Views;
 import example.test.repo.MessageRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -25,7 +27,7 @@ public class MessageController {
     @GetMapping
     @JsonView(Views.IdName.class)
     public List<Message> list() {
-        return messageRepo.findAll();
+        return messageRepo.findAllByOrderByIdAsc();
     }
 
     @GetMapping("{id}")
@@ -54,4 +56,9 @@ public class MessageController {
         messageRepo.delete(message);
     }
 
+    @MessageMapping("/changeMessage")
+    @SendTo("/topic/activity")
+    public Message change(Message message){
+        return messageRepo.save(message);
+    }
 }
