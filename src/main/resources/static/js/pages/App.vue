@@ -4,10 +4,10 @@
             <v-toolbar-title>Sarafan</v-toolbar-title>
             <v-spacer></v-spacer>
             <div v-if="profile">{{profile.name}} <v-btn icon href="/logout"><v-icon>exit_to_app</v-icon></v-btn></div>
+            <v-btn v-else icon href="/login"><v-icon>account_circle</v-icon></v-btn>
         </v-toolbar>
         <v-content>
-            <v-container v-if="!profile">Login <a href="/login">Google</a></v-container>
-            <v-container v-else>
+            <v-container v-if="profile">
                 <messages-list :messages="messages" />
             </v-container>
         </v-content>

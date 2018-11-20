@@ -1,7 +1,7 @@
 <template>
     <v-card class="my-2">
         <v-card-text>
-            <i>{{message.id}}</i>
+            <v-chip>{{message.id}}</v-chip>
             {{message.text}}
         </v-card-text>
     <v-card-actions>
