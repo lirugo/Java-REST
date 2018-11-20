@@ -1,40 +1,45 @@
 <template>
-<div>
-   <div v-if="!profile">Login <a href="/login">Google</a></div>
-    <div v-else>
-        <div>{{profile.name}} <a href="/logout">Logout</a></div>
-        <messages-list :messages="messages" />
-    </div>
-</div>
+    <v-app>
+        <v-toolbar>
+            <v-toolbar-title>Sarafan</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <div v-if="profile">{{profile.name}} <v-btn icon href="/logout"><v-icon>exit_to_app</v-icon></v-btn></div>
+        </v-toolbar>
+        <v-content>
+            <v-container v-if="!profile">Login <a href="/login">Google</a></v-container>
+            <v-container v-else>
+                <messages-list :messages="messages" />
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
-import MessagesList from 'components/messages/MessageList.vue'
-import { addHandler } from "utils/ws";
-import { getIndex } from "utils/collections";
+    import MessagesList from 'components/messages/MessageList.vue'
+    import { addHandler } from "utils/ws";
+    import { getIndex } from "utils/collections";
 
-export default {
-    components: {
-        MessagesList
-    },
-    data() {
-        return {
-            messages: frontendData.messages,
-            profile: frontendData.profile
+    export default {
+        components: {
+            MessagesList
+        },
+        data() {
+            return {
+                messages: frontendData.messages,
+                profile: frontendData.profile
+            }
+        },
+        created() {
+            addHandler(data => {
+                let index = getIndex(this.messages, data.id);
+                if(index > -1 )
+                    this.messages.splice(index, 1, data)
+                else
+                    this.messages.push(data)
+            })
         }
-    },
-    created() {
-        addHandler(data => {
-            let index = getIndex(this.messages, data.id);
-            if(index > -1 )
-                this.messages.splice(index, 1, data)
-            else
-                this.messages.push(data)
-        })
     }
-}
 </script>
 
 <style>
-
 </style>

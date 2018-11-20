@@ -1,27 +1,30 @@
 <template>
-<div>
-    <i>{{message.id}}</i>
-    {{message.text}}
-    <span>
-        <input type="button" value="Edit" @click="edit" />
-        <input type="button" value="X" @click="del" />
-    </span>
-</div>
+    <v-card class="my-2">
+        <v-card-text>
+            <i>{{message.id}}</i>
+            {{message.text}}
+        </v-card-text>
+    <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn icon small @click="edit" ><v-icon small>edit</v-icon></v-btn>
+        <v-btn icon small @click="del" ><v-icon small>delete</v-icon></v-btn>
+    </v-card-actions>
+    </v-card>
 </template>
 
 <script>
 
-export default {
-  props: ['message', 'editMessage', 'deleteMessage', 'messages'],
-    methods: {
-        edit() {
-            this.editMessage(this.message)
-        },
-        del() {
-            this.deleteMessage(this.message)
+    export default {
+        props: ['message', 'editMessage', 'deleteMessage', 'messages'],
+        methods: {
+            edit() {
+                this.editMessage(this.message)
+            },
+            del() {
+                this.deleteMessage(this.message)
+            }
         }
     }
-}
 
 </script>
 
